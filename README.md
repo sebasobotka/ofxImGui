@@ -3,8 +3,10 @@
 ofxAddon that allows you to use [ImGui](https://github.com/ocornut/imgui) in [openFrameworks](https://github.com/openframeworks/openFrameworks).
 
 ## Upgrade Notes
- - Upgrade to version 1.54 WIP
- - 
+ - Upgrade to ImGui version 1.54
+ - Added ImGuiExtension with Combo and LisBox which can take vector<string> as parameter (example-imgviewer)
+ - Added method for adding fonts and using polish characters (example-demo)
+ - Changed class name Helpers to ImGuiHelpers because of conflict with other addons (ofxCv)
  - Versions 1.50 and higher use the keyword `ofxImGui` as a namespace for all classes in the addon, while previous versions just had a class called `ofxImGui`. If you're upgrading from a previous version, make sure to replace all instances of class `ofxImGui` with `ofxImGui::Gui`.
 
 ### Compatibility

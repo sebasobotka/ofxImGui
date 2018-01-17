@@ -97,9 +97,7 @@ namespace ofxImGui
 	void AddImage(ofBaseHasTexture& hasTexture, const ofVec2f& size);
 	void AddImage(ofTexture& texture, const ofVec2f& size);
 
-
 } // end namespace ofxImgui
-
 
 
 //--------------------------------------------------------------
@@ -170,3 +168,4 @@ bool ofxImGui::AddValues(const string& name, vector<DataType>& values, DataType 
 	}
 	return result;
 }
+

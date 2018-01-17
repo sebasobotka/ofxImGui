@@ -1,4 +1,4 @@
-#include "Helpers.h"
+#include "ImGuiHelpers.h"
 
 //--------------------------------------------------------------
 ofxImGui::Settings::Settings()
@@ -685,4 +685,3 @@ void ofxImGui::AddImage(ofTexture& texture, const ofVec2f& size)
 }
 
 //--------------------------------------------------------------
-

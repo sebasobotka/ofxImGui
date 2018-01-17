@@ -1,5 +1,4 @@
 #include "Gui.h"
-
 #include "ofAppRunner.h"
 
 #if defined(TARGET_OPENGLES)
@@ -45,6 +44,17 @@ namespace ofxImGui
 		{
 			setTheme(new BaseTheme());
 		}
+	}
+
+	//--------------------------------------------------------------
+	void Gui::addFont(string font, float fontSize) 
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		string filePath = ofFilePath::getAbsolutePath(font);
+		char fontPath[256];
+		strcpy(fontPath, filePath.c_str());
+		//io.Fonts->AddFontFromFileTTF(fontPath, fontSize, NULL, io.Fonts->GetGlyphRangesDefault());
+		io.Fonts->AddFontFromFileTTF(fontPath, fontSize, NULL, io.Fonts->GetGlyphRangesPolish());
 	}
 
 	//--------------------------------------------------------------

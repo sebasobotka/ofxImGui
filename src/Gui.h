@@ -16,6 +16,7 @@ namespace ofxImGui
 		~Gui();
 
 		void setup(BaseTheme* theme = nullptr);
+		void addFont(string font, float fontSize = 15.0f);
 		void begin();
 		void end();
 		void close();

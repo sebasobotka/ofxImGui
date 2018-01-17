@@ -1,10 +1,13 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup()
-{
+void ofApp::setup() {
     ofSetLogLevel(OF_LOG_VERBOSE);
     
+	gui.addFont("fonts\\Verdana.ttf", 15);
+	gui.addFont("fonts\\RobotoSlab-Regular.ttf", 20);
+	//ImGui::GetIO().FontDefault = 
+
     //required call
     gui.setup();
     
@@ -40,20 +43,18 @@ void ofApp::setup()
 
 bool doSetTheme = false;
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update() {
     
     if(doSetTheme)
     {
         doSetTheme = false;
         gui.setTheme(new ThemeTest());
-        
     }
-    
-    
 }
+
 bool doThemeColorsWindow = false;
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
     
     //backgroundColor is stored as an ImVec4 type but is converted to ofColor automatically
     
@@ -67,6 +68,7 @@ void ofApp::draw(){
     // 1. Show a simple window
     {
         ImGui::Text("Hello, world!");
+		//ImGui::Text(u8"¹¿¹óó³³_Hello, world!"); // polish characters
         ImGui::SliderFloat("Float", &floatValue, 0.0f, 1.0f);
         
         //this will change the app background color
@@ -120,7 +122,7 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key) {
     
     ofLogVerbose(__FUNCTION__) << key;
     switch (key)
@@ -140,51 +142,49 @@ void ofApp::keyPressed(int key){
             break;
         }
     }
-    
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
+void ofApp::keyReleased(int key) {
     ofLogVerbose(__FUNCTION__) << key;
-    
 }
 
-
-void ofApp::mouseScrolled(float x, float y)
-{
+//--------------------------------------------------------------
+void ofApp::mouseScrolled(float x, float y) {
     ofLogVerbose(__FUNCTION__) << "x: " << x << " y: " << y;
 }
+
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y){
+void ofApp::mouseMoved(int x, int y) {
     
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
+void ofApp::mouseDragged(int x, int y, int button) {
     
 }
 
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button) {
     
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button) {
     
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
+void ofApp::windowResized(int w, int h) {
     
 }
 
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
+void ofApp::gotMessage(ofMessage msg) {
     
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
+void ofApp::dragEvent(ofDragInfo dragInfo) {
     
 }

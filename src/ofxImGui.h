@@ -2,4 +2,5 @@
 
 #include "imgui.h"
 #include "Gui.h"
-#include "Helpers.h"
+#include "ImGuiHelpers.h"
+#include "ImGuiExtension.h"
