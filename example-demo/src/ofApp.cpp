@@ -98,19 +98,16 @@ void ofApp::draw(){
     if (show_test_window)
     {
         ImGui::SetNextWindowPos(ofVec2f(650, 20), ImGuiSetCond_FirstUseEver);
-        ImGui::ShowTestWindow(&show_test_window);
+		ImGui::ShowDemoWindow(&show_test_window);
     }
-    
     
     bool pressed = ImGui::ImageButton((ImTextureID)(uintptr_t)imageButtonID, ImVec2(200, 200));
     pressed = ImGui::ImageButton((ImTextureID)(uintptr_t)pixelsButtonID, ImVec2(200, 200));
     pressed = ImGui::ImageButton((ImTextureID)(uintptr_t)textureSourceID, ImVec2(200, 200));
     
-    
     if(doThemeColorsWindow)
     {
         gui.openThemeColorWindow();
-        
     }
     
     //required to call this at end

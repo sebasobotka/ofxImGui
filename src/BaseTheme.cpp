@@ -63,7 +63,6 @@ namespace ofxImGui
 		style->Colors[ImGuiCol_ScrollbarGrab] = ImVec4(col_win_popup, 0.21f);
 		style->Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(col_main_head, 0.78f);
 		style->Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(col_main_head, 1.00f);
-		style->Colors[ImGuiCol_ComboBg] = ImVec4(col_main_area, 1.00f);
 		style->Colors[ImGuiCol_CheckMark] = ImVec4(col_main_head, 0.80f);
 		style->Colors[ImGuiCol_SliderGrab] = ImVec4(col_win_popup, 0.14f);
 		style->Colors[ImGuiCol_SliderGrabActive] = ImVec4(col_main_head, 1.00f);
@@ -88,6 +87,7 @@ namespace ofxImGui
 		style->Colors[ImGuiCol_PlotHistogramHovered] = ImVec4(col_main_head, 1.00f);
 		style->Colors[ImGuiCol_TextSelectedBg] = ImVec4(col_main_head, 0.43f);
 		style->Colors[ImGuiCol_PopupBg] = ImVec4(col_win_backg, 0.92f);
+		//style->Colors[ImGuiCol_PopupBg] = ImVec4(col_main_area, 1.00f); //ComboBg has been merged with PopupBg, so a redirect isn't accurate.
 		style->Colors[ImGuiCol_ModalWindowDarkening] = ImVec4(col_main_area, 0.73f);
 	}
 

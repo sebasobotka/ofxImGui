@@ -46,8 +46,22 @@ namespace ofxImGui
 			io.RenderDrawListsFn = fixedRenderDrawLists;
 		}
 
+
+		// 1.54 different
 		io.SetClipboardTextFn = &BaseEngine::setClipboardString;
 		io.GetClipboardTextFn = &BaseEngine::getClipboardString;
+
+		/*
+		//-2016 / 10 / 15 (1.50) - avoid 'void* user_data' parameter to io.SetClipboardTextFn / io.GetClipboardTextFn pointers.We pass io.ClipboardUserData to it.
+		void ImGui::SetClipboardText(const char* text)
+		{
+			if (GImGui->IO.SetClipboardTextFn)
+				GImGui->IO.SetClipboardTextFn(GImGui->IO.ClipboardUserData, text);
+		}
+		*/
+
+
+		
 
 		createDeviceObjects();
 
