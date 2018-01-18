@@ -6,8 +6,7 @@ void ofApp::setup() {
     
 	gui.addFont("fonts\\Verdana.ttf", 15);
 	gui.addFont("fonts\\RobotoSlab-Regular.ttf", 20);
-	//ImGui::GetIO().FontDefault = 
-
+	
     //required call
     gui.setup();
     
@@ -50,7 +49,6 @@ bool doThemeColorsWindow = false;
 void ofApp::draw() {
     
     //backgroundColor is stored as an ImVec4 type but is converted to ofColor automatically
-    
     ofSetBackgroundColor(backgroundColor);
     
     //required to call this at beginning
@@ -64,24 +62,34 @@ void ofApp::draw() {
 		//ImGui::Text(u8"¹¿¹óó³³_Hello, world!"); // polish characters
         ImGui::SliderFloat("Float", &floatValue, 0.0f, 1.0f);
         
-        //this will change the app background color
-        ImGui::ColorEdit3("Background Color", (float*)&backgroundColor);
-        if(ImGui::Button("Test Window"))
-        {
+        // this will change the app background color, default shows context menu when clicked, can drag one color preview to another
+		ImGui::ColorEdit3("Background Color##1", (float*)&backgroundColor);
+		static ImVec4 newBckgrColor;
+		ImGui::ColorEdit3("Drag above", (float*)&newBckgrColor, ImGuiColorEditFlags_NoOptions);
+        
+		// combo with fonts added to ImGui
+		ImGuiIO& io = ImGui::GetIO();
+		ImFont* font_current = ImGui::GetFont();
+		if (ImGui::BeginCombo("Fonts", font_current->GetDebugName())) {
+			for (auto font : io.Fonts->Fonts) {
+				if (ImGui::Selectable(font->GetDebugName(), font == font_current)) {
+					io.FontDefault = font;
+				}
+			}
+			ImGui::EndCombo();
+		}
+		if(ImGui::Button("Test Window")) {
             show_test_window = !show_test_window;
         }
-        
-        if (ImGui::Button("Another Window"))
-        {
+
+        if (ImGui::Button("Another Window")) {
             //bitwise OR
             show_another_window ^= 1;
-            
         }
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
     }
     // 2. Show another window, this time using an explicit ImGui::Begin and ImGui::End
-    if (show_another_window)
-    {
+    if (show_another_window) {
         //note: ofVec2f and ImVec2f are interchangeable
         ImGui::SetNextWindowSize(ofVec2f(200,100), ImGuiSetCond_FirstUseEver);
         ImGui::Begin("Another Window", &show_another_window);
@@ -90,8 +98,7 @@ void ofApp::draw() {
     }
     
     // 3. Show the ImGui test window. Most of the sample code is in ImGui::ShowTestWindow()
-    if (show_test_window)
-    {
+    if (show_test_window) {
         ImGui::SetNextWindowPos(ofVec2f(650, 20), ImGuiSetCond_FirstUseEver);
 		ImGui::ShowDemoWindow(&show_test_window);
     }
@@ -100,16 +107,14 @@ void ofApp::draw() {
     pressed = ImGui::ImageButton((ImTextureID)(uintptr_t)pixelsButtonID, ImVec2(200, 200));
     pressed = ImGui::ImageButton((ImTextureID)(uintptr_t)textureSourceID, ImVec2(200, 200));
     
-    if(doThemeColorsWindow)
-    {
+    if(doThemeColorsWindow) {
         gui.openThemeColorWindow();
     }
     
     //required to call this at end
     gui.end();
     
-    if(textureSource.isAllocated())
-    {
+    if(textureSource.isAllocated()) {
         //textureSource.draw(ofRandom(200), ofRandom(200));
     }
 }
@@ -147,35 +152,28 @@ void ofApp::mouseScrolled(float x, float y) {
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button) {
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h) {
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg) {
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo) {
-    
 }
