@@ -7,11 +7,11 @@ namespace ofxImGui
 	//--------------------------------------------------------------
 	BaseTheme::BaseTheme()
 	{
-		//col_main_text = ofColor::white;
-		//col_main_head = ofColor::blue;
-		//col_main_area = ofColor::gray;
-		//col_win_popup = ofColor::yellow;
-		//col_win_backg = ofColor::black;
+		col_main_text = ofColor::white;
+		col_main_head = ofColor::blue;
+		col_main_area = ofColor::gray;
+		col_win_popup = ofColor::yellow;
+		col_win_backg = ofColor::black;
 
 		col_main_text = ofColor::fromHex(0xdbede2);
 		col_main_head = ofColor::fromHex(0xd12d49);
@@ -39,6 +39,8 @@ namespace ofxImGui
 		style->GrabRounding = 0.0f;
 		style->ScrollbarSize = 12.0f;
 		style->ScrollbarRounding = 0.0f;
+		//style->WindowPadding = ImVec2(10, 10); // left upper corner of first widget
+		//style->ItemSpacing = ImVec2(10, 10); // spacing between widgets
 	}
 
 	//--------------------------------------------------------------
