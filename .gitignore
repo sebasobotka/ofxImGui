@@ -1,11 +1,18 @@
 *.xcodeproj
-example*/bin/data
-example*/bin/libs/
+#example*/bin/data
+#example*/bin/libs/
+#example*/bin/*
+#!example*/bin/data/.gitkeep
+#!example*/bin/data/*.png
+#!example*/bin/data/fonts/*.ttf
+#!example*/bin/data/fonts/*.otf
+
 example*/bin/*
 !example*/bin/data/.gitkeep
 !example*/bin/data/*.png
 !example*/bin/data/fonts/*.ttf
 !example*/bin/data/fonts/*.otf
+
 
 #########################
 # openFrameworks patterns
