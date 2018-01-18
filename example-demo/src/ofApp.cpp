@@ -41,15 +41,8 @@ void ofApp::setup() {
     ofLogVerbose() << "textureSourceID: " << textureSourceID;
 }
 
-bool doSetTheme = false;
 //--------------------------------------------------------------
 void ofApp::update() {
-    
-    if(doSetTheme)
-    {
-        doSetTheme = false;
-        gui.setTheme(new ThemeTest());
-    }
 }
 
 bool doThemeColorsWindow = false;
@@ -124,21 +117,19 @@ void ofApp::draw() {
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
     
-    ofLogVerbose(__FUNCTION__) << key;
+	ofLogVerbose(__FUNCTION__) << key;
     switch (key)
     {
-        case 't' :
-        {
+        case 't': {
             doThemeColorsWindow = !doThemeColorsWindow;
             break;
         }
-        case 'c' :
-        {
-            doSetTheme = !doSetTheme;
+        case 'c': {
+			gui.setTheme(new ThemeTest());
             break;
         }
-        case 's':
-        {
+        case 'd': {
+			gui.setDefaultTheme();
             break;
         }
     }

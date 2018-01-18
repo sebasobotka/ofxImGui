@@ -1,35 +1,5 @@
 #pragma once
 
-// For fast update ImGui version (only copy source to libs\imgui\src) here is some extra extension of library
-// it should be done in imconfig.h but there were some issues
-
-
-/*
-
-	imgui.h
-
-	struct ImFontAtlas
-	{
-		...
-		IMGUI_API const ImWchar*    GetGlyphRangesPolish();     // Default + Polish characters
-	}
-
-
-	imgui_draw.cpp
-
-	const ImWchar*  ImFontAtlas::GetGlyphRangesPolish()
-	{
-		static const ImWchar ranges[] =
-		{
-			0x0020, 0x00FF, // Basic Latin + Latin Supplement
-			0x0100, 0x01FF, // Polish characters
-			0,
-			};
-		return &ranges[0];
-	}
-
-*/
-
 namespace ImGui {
 
 	static auto vector_getter = [](void* vec, int idx, const char** out_text)
@@ -53,4 +23,35 @@ namespace ImGui {
 		return ListBox(label, currIndex, vector_getter,
 			static_cast<void*>(&values), values.size(), height_in_items);
 	}
+
+
+
+	//inline bool InputRect(const char* label, ofRect* rectPtr,
+	//	int decimal_precision = -1, ImGuiInputTextFlags extra_flags = 0)
+	//{
+	//	ImGui::PushID(label);
+	//	ImGui::BeginGroup();
+
+	//	bool valueChanged = false;
+
+	//	std::array<float*, 4> arr = { &rectPtr->x, &rectPtr->y,
+	//		&rectPtr->w, &rectPtr->h };
+
+	//	for (auto& elem : arr) {
+	//		ImGui::PushID(elem);
+	//		ImGui::PushItemWidth(64.f);
+	//		valueChanged |= ImGui::InputFloat("##arr", elem, 0, 0,
+	//			decimal_precision, extra_flags);
+	//		ImGui::PopID();
+	//		ImGui::SameLine();
+	//	}
+
+	//	ImGui::SameLine();
+	//	ImGui::TextUnformatted(label);
+	//	ImGui::EndGroup();
+
+	//	ImGui::PopID(); // pop label id;
+
+	//	return valueChanged;
+	//}
 }

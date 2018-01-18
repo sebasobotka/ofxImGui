@@ -49,12 +49,73 @@ namespace ofxImGui
 	//--------------------------------------------------------------
 	void Gui::addFont(string font, float fontSize) 
 	{
+		static const ImWchar ranges[] =
+		{
+			0x0020, 0x00FF, // Basic Latin + Latin Supplement
+			0x0100, 0x01FF, // Polish characters
+			0,
+		};
+		
 		ImGuiIO& io = ImGui::GetIO();
 		string filePath = ofFilePath::getAbsolutePath(font);
 		char fontPath[256];
 		strcpy(fontPath, filePath.c_str());
 		//io.Fonts->AddFontFromFileTTF(fontPath, fontSize, NULL, io.Fonts->GetGlyphRangesDefault());
-		io.Fonts->AddFontFromFileTTF(fontPath, fontSize, NULL, io.Fonts->GetGlyphRangesPolish());
+		io.Fonts->AddFontFromFileTTF(fontPath, fontSize, NULL, ranges);
+
+		
+		// HOW TO GET FONT, set default...
+		//ImGuiIO& io = ImGui::GetIO();
+		//ImFont* font_current = ImGui::GetFont();
+		//font_current->GetDebugName()))
+		//ImGuiIO& io = ImGui::GetIO();
+		//ImFont* font_current = ImGui::GetFont();
+		//if (ImGui::BeginCombo(label, font_current->GetDebugName()))
+		//{
+			//for (int n = 0; n < io.Fonts->Fonts.Size; n++)
+				//if (ImGui::Selectable(io.Fonts->Fonts[n]->GetDebugName(), io.Fonts->Fonts[n] == font_current))
+					//io.FontDefault = io.Fonts->Fonts[n];
+			//ImGui::EndCombo();
+		//}
+	}
+
+	//--------------------------------------------------------------
+	void Gui::setImGuiWindowColor(ofColor & color, float alpha) {
+		// alpha range 0.0 - 1.0
+		// it can be global and called once for all windows
+		// or called every frame for different windows
+
+		ImGuiStyle* style = &ImGui::GetStyle();
+		style->Colors[ImGuiCol_WindowBg] = ImVec4(color, alpha);
+	}
+
+	//--------------------------------------------------------------
+	void Gui::setInputTextFontColor(ofColor & color, float alpha) {
+		ImGuiStyle* style = &ImGui::GetStyle();
+		style->Colors[ImGuiCol_Text] = ImVec4(color, alpha);
+		
+		//text selected color
+		//style->Colors[ImGuiCol_TextSelectedBg] = ImVec4(ofColor(0,0,255), 0.43f);
+	}
+
+	//--------------------------------------------------------------
+	void Gui::setInputTextBackgroundColor(ofColor & color, float alpha) {
+		ImGuiStyle* style = &ImGui::GetStyle();
+		style->Colors[ImGuiCol_FrameBg] = ImVec4(color, alpha);
+	}
+
+	//--------------------------------------------------------------
+	void Gui::pushInputTextDimension(float startCursorPosX, float fontSize, float inputTextWidth, float inputTextHeight) {
+		
+		float padY = (inputTextHeight - fontSize) / 2;
+		ImGui::PushItemWidth(inputTextWidth);
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(startCursorPosX, padY));
+	}
+
+	//--------------------------------------------------------------
+	void Gui::popInputTextDimension() {
+		ImGui::PopItemWidth();
+		ImGui::PopStyleVar();
 	}
 
 	//--------------------------------------------------------------
@@ -68,6 +129,11 @@ namespace ofxImGui
 		theme = theme_;
 		theme->updateColors();
 		theme->setup();
+	}
+
+	//--------------------------------------------------------------
+	void Gui::setDefaultTheme()	{
+		setTheme(new BaseTheme());
 	}
 
 	//--------------------------------------------------------------

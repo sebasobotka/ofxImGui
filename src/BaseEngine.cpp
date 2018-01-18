@@ -25,6 +25,7 @@ namespace ofxImGui
 		int key = event.keycode;
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[key] = true;
+
 		//io->AddInputCharacter((unsigned short)event.codepoint);
 	}
 

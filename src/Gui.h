@@ -16,15 +16,22 @@ namespace ofxImGui
 		~Gui();
 
 		void setup(BaseTheme* theme = nullptr);
-		void addFont(string font, float fontSize = 15.0f);
 		void begin();
 		void end();
 		void close();
+		
+		void addFont(string font, float fontSize = 15.0f);
+		void setImGuiWindowColor(ofColor & color, float alpha);
+		void setInputTextFontColor(ofColor & color, float alpha);
+		void setInputTextBackgroundColor(ofColor & color, float alpha);
+		void pushInputTextDimension(float startCursorPosX, float fontSize, float inputTextWidth, float inputTextHeight);
+		void popInputTextDimension();
 
 		BaseEngine* engine;
 		float lastTime;
 
 		void setTheme(BaseTheme* theme);
+		void setDefaultTheme();
 		void openThemeColorWindow();
 
 		BaseTheme* theme;

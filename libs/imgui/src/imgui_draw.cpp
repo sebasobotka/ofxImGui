@@ -1943,17 +1943,6 @@ const ImWchar*   ImFontAtlas::GetGlyphRangesDefault()
     return &ranges[0];
 }
 
-const ImWchar*   ImFontAtlas::GetGlyphRangesPolish()
-{
-	static const ImWchar ranges[] =
-	{
-		0x0020, 0x00FF, // Basic Latin + Latin Supplement
-		0x0100, 0x01FF, // Polish characters
-		0,
-	};
-	return &ranges[0];
-}
-
 const ImWchar*  ImFontAtlas::GetGlyphRangesKorean()
 {
     static const ImWchar ranges[] =

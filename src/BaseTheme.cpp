@@ -7,11 +7,11 @@ namespace ofxImGui
 	//--------------------------------------------------------------
 	BaseTheme::BaseTheme()
 	{
-		col_main_text = ofColor::white;
-		col_main_head = ofColor::blue;
-		col_main_area = ofColor::gray;
-		col_win_popup = ofColor::yellow;
-		col_win_backg = ofColor::black;
+		//col_main_text = ofColor::white;
+		//col_main_head = ofColor::blue;
+		//col_main_area = ofColor::gray;
+		//col_win_popup = ofColor::yellow;
+		//col_win_backg = ofColor::black;
 
 		col_main_text = ofColor::fromHex(0xdbede2);
 		col_main_head = ofColor::fromHex(0xd12d49);
@@ -105,7 +105,9 @@ namespace ofxImGui
 		floats[0] = color.r / 255.f;
 		floats[1] = color.g / 255.f;
 		floats[2] = color.b / 255.f;
-		didChange = ImGui::ColorEdit3(label.c_str(), &floats[0]);
+		
+		didChange = ImGui::ColorEdit3(label.c_str(), &floats[0], ImGuiColorEditFlags_NoOptions);
+
 		color = convertColor(&floats[0]);
 		return didChange;
 	}
