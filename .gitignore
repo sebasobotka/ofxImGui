@@ -1,14 +1,23 @@
-*.xcodeproj
-#example*/bin/data
-#example*/bin/libs/
-#example*/bin/*
-#!example*/bin/data/.gitkeep
-#!example*/bin/data/*.png
-#!example*/bin/data/fonts/*.ttf
-#!example*/bin/data/fonts/*.otf
+#########################
+# openFrameworks data folder
+#########################
 
 example*/bin/*
 !/example*/bin/data
+
+bin/*
+!bin/data/fonts
+!bin/data/ofxbraitsch
+!bin/data/settings
+!bin/data/shaders
+!bin/data/ssl
+
+
+#bin/data/images/gallery
+#bin/data/video/*
+archiwum/
+
+*.xcodeproj
 
 #########################
 # openFrameworks patterns
@@ -41,6 +50,9 @@ apps/*
 [Bb]uild/
 [Oo]bj/
 *.o
+*.slo
+*.lo
+*.obj
 [Dd]ebug*/
 [Rr]elease*/
 *.mode*
@@ -51,6 +63,29 @@ apps/*
 *.cpp.eep
 *.cpp.elf
 *.cpp.hex
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
 
 #########################
 # IDE
@@ -108,6 +143,8 @@ local.properties
 Thumbs.db
 # Folder config file
 Desktop.ini
+#*.lnk
+#*.zip
 
 # Android
 .csettings

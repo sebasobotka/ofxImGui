@@ -24,9 +24,8 @@ namespace ofxImGui
 		void exit() override;
 		bool createDeviceObjects() override;
 		void invalidateDeviceObjects() override;
-
 		bool createFontsTexture();
-
+		
 		void onKeyReleased(ofKeyEventArgs& event) override;
 		void onKeyPressed(ofKeyEventArgs& event) override;
 		void onMousePressed(ofMouseEventArgs& event) override;

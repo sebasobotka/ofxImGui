@@ -25,9 +25,15 @@ namespace ofxImGui
 		virtual void onMousePressed(ofMouseEventArgs& event);
 		virtual void onMouseReleased(ofMouseEventArgs& event);
 		virtual void onMouseScrolled(ofMouseEventArgs& event);
+		virtual void mouseMoved(ofMouseEventArgs& event);
+		virtual void touchDown(ofTouchEventArgs& touch);
+		virtual void touchUp(ofTouchEventArgs& touch);
+		virtual void touchMoved(ofTouchEventArgs& touch);
 		virtual void onKeyPressed(ofKeyEventArgs& event);
 		virtual void onKeyReleased(ofKeyEventArgs& event) = 0;
 		virtual void onWindowResized(ofResizeEventArgs& window);
+		
+		virtual ofVec2f getMousePos();
 
 		virtual GLuint loadTextureImage2D(unsigned char * pixels, int width, int height);
 
@@ -49,6 +55,7 @@ namespace ofxImGui
 
 		bool mousePressed[5] = { false };
 		bool mouseReleased = true;
+		ofVec2f mouseCursorPos = ofVec2f(0, 0);
 
 	protected:
 		bool isSetup;

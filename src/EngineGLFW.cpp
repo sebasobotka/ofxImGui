@@ -11,8 +11,7 @@ namespace ofxImGui
 	unsigned int EngineGLFW::g_VaoHandle = 0;
 
 	//--------------------------------------------------------------
-	void EngineGLFW::setup()
-	{
+	void EngineGLFW::setup() {
 		if (isSetup) return;
 
 		ImGuiIO& io = ImGui::GetIO();
@@ -37,31 +36,15 @@ namespace ofxImGui
 		io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
 		io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-		if (ofIsGLProgrammableRenderer())
-		{
+		if (ofIsGLProgrammableRenderer()) {
 			io.RenderDrawListsFn = programmableRenderDrawLists;
 		}
-		else
-		{
+		else {
 			io.RenderDrawListsFn = fixedRenderDrawLists;
 		}
 
-
-		// 1.54 different
 		io.SetClipboardTextFn = &BaseEngine::setClipboardString;
 		io.GetClipboardTextFn = &BaseEngine::getClipboardString;
-
-		/*
-		//-2016 / 10 / 15 (1.50) - avoid 'void* user_data' parameter to io.SetClipboardTextFn / io.GetClipboardTextFn pointers.We pass io.ClipboardUserData to it.
-		void ImGui::SetClipboardText(const char* text)
-		{
-			if (GImGui->IO.SetClipboardTextFn)
-				GImGui->IO.SetClipboardTextFn(GImGui->IO.ClipboardUserData, text);
-		}
-		*/
-
-
-		
 
 		createDeviceObjects();
 
@@ -69,9 +52,13 @@ namespace ofxImGui
 		ofAddListener(ofEvents().mousePressed, this, &EngineGLFW::onMousePressed);
 		ofAddListener(ofEvents().keyReleased, this, &EngineGLFW::onKeyReleased);
 		ofAddListener(ofEvents().keyPressed, this, &EngineGLFW::onKeyPressed);
-
+		
 		// BaseEngine listeners
+		ofAddListener(ofEvents().touchDown, (BaseEngine*)this, &BaseEngine::touchDown);
+		ofAddListener(ofEvents().touchUp, (BaseEngine*)this, &BaseEngine::touchUp);
+		ofAddListener(ofEvents().touchMoved, (BaseEngine*)this, &BaseEngine::touchMoved);
 		ofAddListener(ofEvents().mouseDragged, (BaseEngine*)this, &BaseEngine::onMouseDragged);
+		ofAddListener(ofEvents().mouseMoved, (BaseEngine*)this, &BaseEngine::mouseMoved);
 		ofAddListener(ofEvents().mouseReleased, (BaseEngine*)this, &BaseEngine::onMouseReleased);
 		ofAddListener(ofEvents().mouseScrolled, (BaseEngine*)this, &BaseEngine::onMouseScrolled);
 		ofAddListener(ofEvents().windowResized, (BaseEngine*)this, &BaseEngine::onWindowResized);
@@ -80,8 +67,7 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	void EngineGLFW::exit()
-	{
+	void EngineGLFW::exit()	{
 		if (!isSetup) return;
 
 		// Override listeners
@@ -90,7 +76,11 @@ namespace ofxImGui
 		ofRemoveListener(ofEvents().keyPressed, this, &EngineGLFW::onKeyPressed);
 
 		// Base class listeners
+		ofRemoveListener(ofEvents().touchDown, (BaseEngine*)this, &BaseEngine::touchDown);
+		ofRemoveListener(ofEvents().touchUp, (BaseEngine*)this, &BaseEngine::touchUp);
+		ofRemoveListener(ofEvents().touchMoved, (BaseEngine*)this, &BaseEngine::touchMoved);
 		ofRemoveListener(ofEvents().mouseDragged, (BaseEngine*)this, &BaseEngine::onMouseDragged);
+		ofRemoveListener(ofEvents().mouseMoved, (BaseEngine*)this, &BaseEngine::mouseMoved);
 		ofRemoveListener(ofEvents().mouseReleased, (BaseEngine*)this, &BaseEngine::onMouseReleased);
 		ofRemoveListener(ofEvents().mouseScrolled, (BaseEngine*)this, &BaseEngine::onMouseScrolled);
 		ofRemoveListener(ofEvents().windowResized, (BaseEngine*)this, &BaseEngine::onWindowResized);
@@ -101,39 +91,45 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	void remapToGLFWConvention(int& button)
-	{
-		switch (button)
-		{
+	void remapToGLFWConvention(int& button)	{
+		switch (button)		{
 
-		case 0:
-		{
-			break;
-		}
-		case 1:
-		{
-			button = 2;
-			break;
-		}
-		case 2:
-		{
-			button = 1;
-			break;
-		}
+			case 0:	{
+				break;
+			}
+			case 1:	{
+				button = 2;
+				break;
+			}
+			case 2:	{
+				button = 1;
+				break;
+			}
 		}
 	}
 
 	//--------------------------------------------------------------
-	void EngineGLFW::onMousePressed(ofMouseEventArgs& event)
-	{
+	void EngineGLFW::onMousePressed(ofMouseEventArgs& event) {
+		mouseCursorPos.set(event.x, event.y);
 		int button = event.button;
-		if (button >= 0 && button < 5)
-		{
+		if (button >= 0 && button < 5) {
 			remapToGLFWConvention(button);
 			mousePressed[button] = true;
 			mouseReleased = false;
 		}
 	}
+
+	////--------------------------------------------------------------
+	//void EngineGLFW::touchDown(ofTouchEventArgs & touch) {
+	//	mouseCursorPos.set(touch.x, touch.y);
+	//	mousePressed[0] = true;
+	//	mouseReleased = false;
+	//}
+
+	////--------------------------------------------------------------
+	//ofVec2f EngineGLFW::getMousePos() {
+	//	return mouseCursorPos;
+	//}
 
 	//--------------------------------------------------------------
 	void EngineGLFW::programmableRenderDrawLists(ImDrawData * draw_data)
@@ -478,6 +474,7 @@ namespace ofxImGui
 			g_FontTexture = 0;
 		}
 	}
+
 }
 
 #endif

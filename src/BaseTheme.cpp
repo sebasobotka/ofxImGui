@@ -5,8 +5,7 @@
 namespace ofxImGui
 {
 	//--------------------------------------------------------------
-	BaseTheme::BaseTheme()
-	{
+	BaseTheme::BaseTheme() {
 		col_main_text = ofColor::white;
 		col_main_head = ofColor::blue;
 		col_main_area = ofColor::gray;
@@ -21,9 +20,20 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	void BaseTheme::setup()
-	{
+	void BaseTheme::setup()	{
+
 		ImGuiStyle* style = &ImGui::GetStyle();
+		
+		ImGuiIO& io = ImGui::GetIO();
+		int refFontSize = 13;
+		if (io.FontDefault == NULL) {
+			//ofLogNotice("default font NULL") << io.Fonts->Fonts[0]->GetDebugName();
+			refFontSize = io.Fonts->Fonts[0]->FontSize;
+		}
+		else {
+			//ofLogNotice("default font") << io.FontDefault->GetDebugName();
+			refFontSize = io.FontDefault->FontSize;
+		}
 
 		style->WindowMinSize = ImVec2(160, 65);
 		style->FramePadding = ImVec2(4, 2);
@@ -37,15 +47,14 @@ namespace ofxImGui
 		style->ColumnsMinSpacing = 50.0f;
 		style->GrabMinSize = 14.0f;
 		style->GrabRounding = 0.0f;
-		style->ScrollbarSize = 12.0f;
+		style->ScrollbarSize = refFontSize + 4.0f;  // when font size changes scrollbarsize is about fontSize + 4 
 		style->ScrollbarRounding = 0.0f;
 		//style->WindowPadding = ImVec2(10, 10); // left upper corner of first widget
 		//style->ItemSpacing = ImVec2(10, 10); // spacing between widgets
 	}
 
 	//--------------------------------------------------------------
-	void BaseTheme::updateColors()
-	{
+	void BaseTheme::updateColors() {
 		ImGuiStyle* style = &ImGui::GetStyle();
 
 		style->Colors[ImGuiCol_Text] = ImVec4(col_main_text, 1.00f);
@@ -94,14 +103,12 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	inline ofColor BaseTheme::convertColor(float* f)
-	{
+	inline ofColor BaseTheme::convertColor(float* f) {
 		return ofColor(f[0] * 255, f[1] * 255, f[2] * 255);
 	}
 
 	//--------------------------------------------------------------
-	bool BaseTheme::addColorEdit(string label, ofColor& color)
-	{
+	bool BaseTheme::addColorEdit(string label, ofColor& color) {
 		bool didChange = false;
 		float floats[3];
 		floats[0] = color.r / 255.f;
@@ -115,8 +122,7 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	void BaseTheme::themeColorsWindow(bool isOpen)
-	{
+	void BaseTheme::themeColorsWindow(bool isOpen) {
 		if (isOpen)
 		{
 			ImGui::SetNextWindowSize(ImVec2(421, 192), ImGuiSetCond_FirstUseEver);
@@ -128,8 +134,7 @@ namespace ofxImGui
 			bool b4 = addColorEdit("Popups", col_win_popup);
 			bool b5 = addColorEdit("Background", col_win_backg);
 
-			if (b1 || b2 || b3 || b4 || b5)
-			{
+			if (b1 || b2 || b3 || b4 || b5)	{
 				updateColors();
 			}
 

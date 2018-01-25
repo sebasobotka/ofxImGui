@@ -1,5 +1,5 @@
 #pragma once
-
+#include "ofLog.h"
 #include "ofColor.h"
 
 namespace ofxImGui

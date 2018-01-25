@@ -1,5 +1,4 @@
 #include "BaseEngine.h"
-
 #include "ofAppRunner.h"
 #include "imgui.h"
 
@@ -20,66 +19,87 @@ namespace ofxImGui
 	unsigned int BaseEngine::g_ElementsHandle = 0;
 
 	//--------------------------------------------------------------
-	void BaseEngine::onKeyPressed(ofKeyEventArgs& event)
-	{
+	ofVec2f BaseEngine::getMousePos() {
+		return mouseCursorPos;
+	}
+
+	//--------------------------------------------------------------
+	void BaseEngine::onKeyPressed(ofKeyEventArgs& event) {
 		int key = event.keycode;
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[key] = true;
-
 		//io->AddInputCharacter((unsigned short)event.codepoint);
 	}
 
 	//--------------------------------------------------------------
-	void BaseEngine::onMouseDragged(ofMouseEventArgs& event)
-	{
-		mouseReleased = false;
-	}
-
-	//--------------------------------------------------------------
-	void BaseEngine::onMousePressed(ofMouseEventArgs& event)
-	{
-		if (event.button >= 0 && event.button < 5)
-		{
+	void BaseEngine::onMousePressed(ofMouseEventArgs& event) {
+		mouseCursorPos.set(event.x, event.y);
+		if (event.button >= 0 && event.button < 5) {
 			mousePressed[event.button] = true;
 			mouseReleased = false;
 		}
 	}
 
 	//--------------------------------------------------------------
-	void BaseEngine::onMouseReleased(ofMouseEventArgs& event)
-	{
+	void BaseEngine::onMouseReleased(ofMouseEventArgs& event) {
+		mouseCursorPos.set(event.x, event.y);
 		mouseReleased = true;
 	}
 
 	//--------------------------------------------------------------
-	void BaseEngine::onMouseScrolled(ofMouseEventArgs& event)
-	{
+	void BaseEngine::mouseMoved(ofMouseEventArgs & event) {
+		mouseCursorPos.set((float)ofGetMouseX(), (float)ofGetMouseY());
+	}
+
+	//--------------------------------------------------------------
+	void BaseEngine::onMouseDragged(ofMouseEventArgs& event) {
+		mouseCursorPos.set(event.x, event.y);
+		mouseReleased = false;
+	}
+
+	//--------------------------------------------------------------
+	void BaseEngine::onMouseScrolled(ofMouseEventArgs& event) {
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseWheel = event.scrollY;
 	}
 
 	//--------------------------------------------------------------
-	void BaseEngine::onWindowResized(ofResizeEventArgs& window)
-	{
+	void BaseEngine::touchDown(ofTouchEventArgs & touch) {
+		mouseCursorPos.set(touch.x, touch.y);
+		mousePressed[0] = true;
+		mouseReleased = false;
+	}
+
+	//--------------------------------------------------------------
+	void BaseEngine::touchUp(ofTouchEventArgs & touch) {
+		mouseCursorPos.set(touch.x, touch.y);
+		mouseReleased = true;
+	}
+
+	//--------------------------------------------------------------
+	void BaseEngine::touchMoved(ofTouchEventArgs & touch) {
+		mouseCursorPos.set(touch.x, touch.y);
+		mouseReleased = false;
+	}
+
+	//--------------------------------------------------------------
+	void BaseEngine::onWindowResized(ofResizeEventArgs& window)	{
 		ImGuiIO& io = ImGui::GetIO();
 		io.DisplaySize = ImVec2((float)window.width, (float)window.height);
 	}
 
 	//--------------------------------------------------------------
-	const char* BaseEngine::getClipboardString(void* user_data)
-	{
+	const char* BaseEngine::getClipboardString(void* user_data)	{
 		return &ofGetWindowPtr()->getClipboardString()[0];
 	}
 	
 	//--------------------------------------------------------------
-	void BaseEngine::setClipboardString(void* user_data, const char * text)
-	{
+	void BaseEngine::setClipboardString(void* user_data, const char * text)	{
 		ofGetWindowPtr()->setClipboardString(text);
 	}
 
 	//--------------------------------------------------------------
-	GLuint BaseEngine::loadTextureImage2D(unsigned char * pixels, int width, int height)
-	{
+	GLuint BaseEngine::loadTextureImage2D(unsigned char * pixels, int width, int height) {
 		GLint last_texture;
 		glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
 

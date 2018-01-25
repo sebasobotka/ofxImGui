@@ -20,7 +20,9 @@ namespace ofxImGui
 		void end();
 		void close();
 		
-		void addFont(string font, float fontSize = 15.0f);
+		void clearTouchState();
+		void SetDefaultFont(int indexAtlasFont);
+		int addFont(const string & fontPath, float fontSize = 13.0f);
 		void setImGuiWindowColor(ofColor & color, float alpha);
 		void setInputTextFontColor(ofColor & color, float alpha);
 		void setInputTextBackgroundColor(ofColor & color, float alpha);
@@ -46,5 +48,17 @@ namespace ofxImGui
 		GLuint loadTexture(ofTexture& texture, string imagePath);
 
 		vector<ofTexture*> loadedTextures;
+
+		void addAsciiChar(int key);
+		void addSpecialKey(int key);
+		void sendSpecialKey(int key, int state);
+		void checkSpecialKeys();
+
+		struct virtSpecialKey {
+			int key;
+			bool state;
+		};
+		vector<virtSpecialKey> virtKeyboardSpecialKeys;
+	
 	};
 }
