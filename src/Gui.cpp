@@ -61,8 +61,12 @@ namespace ofxImGui
 
 	//--------------------------------------------------------------
 	int Gui::addFont(const string & fontPath, float fontSize) {
+			
+		//ImFontConfig structure allows you to configure oversampling.
+		//By default OversampleH = 3 and OversampleV = 1 which will make your font texture data 3 times larger
+		//than necessary, so you may reduce that to 1.
 
-		static const ImWchar ranges[] =
+		static const ImWchar polishCharRanges[] =
 		{
 			0x0020, 0x00FF, // Basic Latin + Latin Supplement
 			0x0100, 0x01FF, // Polish characters
@@ -75,7 +79,7 @@ namespace ofxImGui
 		char charFontPath[256];
 		strcpy(charFontPath, filePath.c_str());
 		//io.Fonts->AddFontFromFileTTF(fontPath, fontSize, NULL, io.Fonts->GetGlyphRangesDefault());
-		ImFont* font = io.Fonts->AddFontFromFileTTF(charFontPath, fontSize, NULL, ranges);
+		ImFont* font = io.Fonts->AddFontFromFileTTF(charFontPath, fontSize, NULL, polishCharRanges);
 
 		if (io.Fonts->Fonts.size() > 0) {
 			return io.Fonts->Fonts.size() - 1;
