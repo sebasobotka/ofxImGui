@@ -45,14 +45,6 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	void Gui::clearTouchState() {
-//		ImGuiIO& io = ImGui::GetIO();
-//		engine->mouseCursorPos.set(-FLT_MAX, -FLT_MAX);
-//		ofLogNotice("Frame nr") << ofGetFrameNum() << " , mousePos: " << io.MousePos << ", setting mouse pos -FLT_MAX..";
-////		clearMousePos = true;
-	}
-
-	//--------------------------------------------------------------
 	void Gui::SetDefaultFont(int indexAtlasFont) {
 		ImGuiIO& io = ImGui::GetIO();
 		if (indexAtlasFont < io.Fonts->Fonts.size()) {
@@ -133,17 +125,8 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	//void Gui::addPrintableKey(int key) {
-	//	ImGuiIO& io = ImGui::GetIO();
-	//	io.AddInputCharacter(key);
-	//}
-
-	//--------------------------------------------------------------
 	void Gui::addPrintableKeys(const string & input) {
-
-		ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << " , " << input;
-
-		// TODO clear or not?
+	//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << " , " << input;
 		virtKeyboardPrintableKeys.clear();
 
 		std::vector<char> cvec(input.begin(), input.end());
@@ -176,13 +159,11 @@ namespace ofxImGui
 
 			for (int i = 0; i < sizeAllowedToAdd; i++) {
 				char c = virtKeyboardPrintableKeys[i];
-				//gui.addPrintableKey(c);
 				io.AddInputCharacter(c);
 			}
 			virtKeyboardPrintableKeys.erase(virtKeyboardPrintableKeys.begin(), virtKeyboardPrintableKeys.begin() + sizeAllowedToAdd);
 		}
 	}
-
 
 	//--------------------------------------------------------------
 	void Gui::addFunctionKey(int key) {
@@ -296,7 +277,7 @@ namespace ofxImGui
 	
 		if ((ofGetFrameNum() - engine->frameNr) == 2) {
 			engine->setMousePos(-FLT_MAX, -FLT_MAX);
-			ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << "::clearing mouse pos";
+			//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << "::clearing mouse pos";
 		}
 
 		io.MousePos = ImVec2((float)engine->getMousePos().x, (float)engine->getMousePos().y);

@@ -20,7 +20,6 @@ namespace ofxImGui
 		void end();
 		void close();
 		
-		void clearTouchState();
 		void SetDefaultFont(int indexAtlasFont);
 		int addFont(const string & fontPath, float fontSize = 13.0f);
 		void setImGuiWindowColor(ofColor & color, float alpha);
@@ -50,12 +49,8 @@ namespace ofxImGui
 		vector<ofTexture*> loadedTextures;
 
 		// virtual keyboard
-		//void addPrintableKey(int key);
 		void addPrintableKeys(const string & input);
 		void passPrintableKeys();
-
-		//void passPrintableKeys();
-
 		void addFunctionKey(int key);
 		void passFunctionKeys();
 
