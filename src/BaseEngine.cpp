@@ -24,6 +24,11 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
+	void BaseEngine::setMousePos(float x, float y) {
+		mouseCursorPos.set(x, y);
+	}
+
+	//--------------------------------------------------------------
 	void BaseEngine::onKeyPressed(ofKeyEventArgs& event) {
 		int key = event.keycode;
 		ImGuiIO& io = ImGui::GetIO();
@@ -33,27 +38,34 @@ namespace ofxImGui
 
 	//--------------------------------------------------------------
 	void BaseEngine::onMousePressed(ofMouseEventArgs& event) {
-		mouseCursorPos.set(event.x, event.y);
+
+		setMousePos(event.x, event.y);
+		//mouseCursorPos.set(event.x, event.y);
 		if (event.button >= 0 && event.button < 5) {
 			mousePressed[event.button] = true;
 			mouseReleased = false;
 		}
+		//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__;
 	}
 
 	//--------------------------------------------------------------
 	void BaseEngine::onMouseReleased(ofMouseEventArgs& event) {
-		mouseCursorPos.set(event.x, event.y);
+		//mouseCursorPos.set(event.x, event.y);
+		setMousePos(event.x, event.y);
 		mouseReleased = true;
+		//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__;
 	}
 
 	//--------------------------------------------------------------
 	void BaseEngine::mouseMoved(ofMouseEventArgs & event) {
-		mouseCursorPos.set((float)ofGetMouseX(), (float)ofGetMouseY());
+		setMousePos((float)ofGetMouseX(), (float)ofGetMouseY());
+		//mouseCursorPos.set((float)ofGetMouseX(), (float)ofGetMouseY());
 	}
 
 	//--------------------------------------------------------------
 	void BaseEngine::onMouseDragged(ofMouseEventArgs& event) {
-		mouseCursorPos.set(event.x, event.y);
+		//mouseCursorPos.set(event.x, event.y);
+		setMousePos(event.x, event.y);
 		mouseReleased = false;
 	}
 
@@ -65,20 +77,27 @@ namespace ofxImGui
 
 	//--------------------------------------------------------------
 	void BaseEngine::touchDown(ofTouchEventArgs & touch) {
-		mouseCursorPos.set(touch.x, touch.y);
+		//mouseCursorPos.set(touch.x, touch.y);
+		setMousePos(touch.x, touch.y);
 		mousePressed[0] = true;
 		mouseReleased = false;
+		//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__;
 	}
 
 	//--------------------------------------------------------------
 	void BaseEngine::touchUp(ofTouchEventArgs & touch) {
-		mouseCursorPos.set(touch.x, touch.y);
 		mouseReleased = true;
+		framesToClearMousePos = 3;
+		ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__;
+		
+		// another approach, to set frameNr and then check ofGetFrameNum()-frameNr == 2
+		frameNr = ofGetFrameNum();
 	}
 
 	//--------------------------------------------------------------
 	void BaseEngine::touchMoved(ofTouchEventArgs & touch) {
-		mouseCursorPos.set(touch.x, touch.y);
+		//mouseCursorPos.set(touch.x, touch.y);
+		setMousePos(touch.x, touch.y);
 		mouseReleased = false;
 	}
 

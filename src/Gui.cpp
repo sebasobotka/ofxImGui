@@ -23,7 +23,8 @@ namespace ofxImGui
 		ImGuiIO& io = ImGui::GetIO();
 
 		io.DisplaySize = ImVec2((float)ofGetWidth(), (float)ofGetHeight());
-		io.MouseDrawCursor = false;
+		//io.MouseDrawCursor = false;
+		io.MouseDrawCursor = true;
 
 		#if defined(TARGET_OPENGLES)
 			engine = new EngineOpenGLES();
@@ -45,7 +46,10 @@ namespace ofxImGui
 
 	//--------------------------------------------------------------
 	void Gui::clearTouchState() {
-		engine->mouseCursorPos.set(-FLT_MAX, -FLT_MAX);
+//		ImGuiIO& io = ImGui::GetIO();
+//		engine->mouseCursorPos.set(-FLT_MAX, -FLT_MAX);
+//		ofLogNotice("Frame nr") << ofGetFrameNum() << " , mousePos: " << io.MousePos << ", setting mouse pos -FLT_MAX..";
+////		clearMousePos = true;
 	}
 
 	//--------------------------------------------------------------
@@ -129,32 +133,76 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	void Gui::addAsciiChar(int key) {
+	//void Gui::addPrintableKey(int key) {
+	//	ImGuiIO& io = ImGui::GetIO();
+	//	io.AddInputCharacter(key);
+	//}
+
+	//--------------------------------------------------------------
+	void Gui::addPrintableKeys(const string & input) {
+
+		ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << " , " << input;
+
+		// TODO clear or not?
+		virtKeyboardPrintableKeys.clear();
+
+		std::vector<char> cvec(input.begin(), input.end());
+		for (auto c : cvec) {
+			virtKeyboardPrintableKeys.push_back(c);
+		}
+	}
+
+	//--------------------------------------------------------------
+	void Gui::passPrintableKeys() {
 		ImGuiIO& io = ImGui::GetIO();
-		io.AddInputCharacter(key);
+
+		if (virtKeyboardPrintableKeys.size() > 0) {
+			//ofLogNotice("Buffer to inputtext") << ofToString(inputTextChars) << ", size: " << inputTextChars.size();
+			// one char by one
+			/*
+			char c = bufToSend[0];
+			bufToSend.erase(bufToSend.begin(), bufToSend.begin() + 1);
+			gui.addAsciiChar(c);
+			*/
+
+			const int wcharsBufLen = sizeof(ImGuiIO::InputCharacters) / sizeof(ImWchar) - 1;
+			int sizeAllowedToAdd = wcharsBufLen;
+			if (virtKeyboardPrintableKeys.size() >= wcharsBufLen) {
+				sizeAllowedToAdd = wcharsBufLen;
+			}
+			else {
+				sizeAllowedToAdd = virtKeyboardPrintableKeys.size();
+			}
+
+			for (int i = 0; i < sizeAllowedToAdd; i++) {
+				char c = virtKeyboardPrintableKeys[i];
+				//gui.addPrintableKey(c);
+				io.AddInputCharacter(c);
+			}
+			virtKeyboardPrintableKeys.erase(virtKeyboardPrintableKeys.begin(), virtKeyboardPrintableKeys.begin() + sizeAllowedToAdd);
+		}
+	}
+
+
+	//--------------------------------------------------------------
+	void Gui::addFunctionKey(int key) {
+		virtKeyboardFunctionKeys.emplace_back(virtFunctionKey{ key, true });
+		virtKeyboardFunctionKeys.emplace_back(virtFunctionKey{ key, false });
 	}
 
 	//--------------------------------------------------------------
-	void Gui::addSpecialKey(int key) {
-		virtKeyboardSpecialKeys.emplace_back(virtSpecialKey{ key, true });
-		virtKeyboardSpecialKeys.emplace_back(virtSpecialKey{ key, false });
-	}
+	void Gui::passFunctionKeys() {
+		ImGuiIO& io = ImGui::GetIO();
+		
+		if (virtKeyboardFunctionKeys.size()) {
+			
+			ofLogNotice("Frame nr") << ofGetFrameNum() << " , mousePos: " << io.MousePos  << ", key: " << virtKeyboardFunctionKeys[0].key << ", state: " << virtKeyboardFunctionKeys[0].state;
 
-	//--------------------------------------------------------------
-	void Gui::checkSpecialKeys() {
-		if (virtKeyboardSpecialKeys.size()) {
-			ofLogNotice("special key") << ofGetTimestampString() << ", " << virtKeyboardSpecialKeys[0].key << ", state: " << virtKeyboardSpecialKeys[0].state;
-			sendSpecialKey(virtKeyboardSpecialKeys[0].key, virtKeyboardSpecialKeys[0].state);
-			virtKeyboardSpecialKeys.erase(virtKeyboardSpecialKeys.begin(), virtKeyboardSpecialKeys.begin() + 1);
+			io.KeysDown[virtKeyboardFunctionKeys[0].key] = virtKeyboardFunctionKeys[0].state;
+			virtKeyboardFunctionKeys.erase(virtKeyboardFunctionKeys.begin(), virtKeyboardFunctionKeys.begin() + 1);
 		}
 	}
 	
-	//--------------------------------------------------------------
-	void Gui::sendSpecialKey(int key, int state) {
-		ImGuiIO& io = ImGui::GetIO();
-		io.KeysDown[key] = state;
-	}
-
 	//--------------------------------------------------------------
 	void Gui::setTheme(BaseTheme* theme_) {
 		if (theme) {
@@ -241,14 +289,27 @@ namespace ofxImGui
 		}
 		lastTime = currentTime;
 		
-		//io.MousePos = ImVec2((float)ofGetMouseX(), (float)ofGetMouseY());
-		io.MousePos = ImVec2((float)engine->getMousePos().x, (float)engine->getMousePos().y);
+		/*if (--engine->framesToClearMousePos == 0) {
+			engine->setMousePos(-FLT_MAX, -FLT_MAX);
+			ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << "::clearing mouse pos";
+		}*/
 	
+		if ((ofGetFrameNum() - engine->frameNr) == 2) {
+			engine->setMousePos(-FLT_MAX, -FLT_MAX);
+			ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << "::clearing mouse pos";
+		}
+
+		io.MousePos = ImVec2((float)engine->getMousePos().x, (float)engine->getMousePos().y);
+
 		for (int i = 0; i < 5; i++) {
 			io.MouseDown[i] = engine->mousePressed[i];
 			// Update for next frame; set to false only if the mouse has been released
 			engine->mousePressed[i] = !engine->mouseReleased;
 		}
+
+		// virtual keyboard
+		passPrintableKeys();
+		passFunctionKeys();
 
 		ImGui::NewFrame();
 	}

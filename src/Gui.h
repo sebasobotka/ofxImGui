@@ -49,16 +49,21 @@ namespace ofxImGui
 
 		vector<ofTexture*> loadedTextures;
 
-		void addAsciiChar(int key);
-		void addSpecialKey(int key);
-		void sendSpecialKey(int key, int state);
-		void checkSpecialKeys();
+		// virtual keyboard
+		//void addPrintableKey(int key);
+		void addPrintableKeys(const string & input);
+		void passPrintableKeys();
 
-		struct virtSpecialKey {
+		//void passPrintableKeys();
+
+		void addFunctionKey(int key);
+		void passFunctionKeys();
+
+		struct virtFunctionKey {
 			int key;
 			bool state;
 		};
-		vector<virtSpecialKey> virtKeyboardSpecialKeys;
-	
+		vector<virtFunctionKey> virtKeyboardFunctionKeys;
+		vector<char> virtKeyboardPrintableKeys;
 	};
 }

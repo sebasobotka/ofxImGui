@@ -34,6 +34,7 @@ namespace ofxImGui
 		virtual void onWindowResized(ofResizeEventArgs& window);
 		
 		virtual ofVec2f getMousePos();
+		virtual void setMousePos(float x, float y);
 
 		virtual GLuint loadTextureImage2D(unsigned char * pixels, int width, int height);
 
@@ -56,9 +57,12 @@ namespace ofxImGui
 		bool mousePressed[5] = { false };
 		bool mouseReleased = true;
 		ofVec2f mouseCursorPos = ofVec2f(0, 0);
+		int framesToClearMousePos = 0;
+		int frameNr;
 
 	protected:
 		bool isSetup;
+		
 	};
 }
 

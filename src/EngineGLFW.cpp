@@ -117,19 +117,8 @@ namespace ofxImGui
 			mousePressed[button] = true;
 			mouseReleased = false;
 		}
+		//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__;
 	}
-
-	////--------------------------------------------------------------
-	//void EngineGLFW::touchDown(ofTouchEventArgs & touch) {
-	//	mouseCursorPos.set(touch.x, touch.y);
-	//	mousePressed[0] = true;
-	//	mouseReleased = false;
-	//}
-
-	////--------------------------------------------------------------
-	//ofVec2f EngineGLFW::getMousePos() {
-	//	return mouseCursorPos;
-	//}
 
 	//--------------------------------------------------------------
 	void EngineGLFW::programmableRenderDrawLists(ImDrawData * draw_data)
