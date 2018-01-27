@@ -23,8 +23,7 @@ namespace ofxImGui
 		ImGuiIO& io = ImGui::GetIO();
 
 		io.DisplaySize = ImVec2((float)ofGetWidth(), (float)ofGetHeight());
-		//io.MouseDrawCursor = false;
-		io.MouseDrawCursor = true;
+		io.MouseDrawCursor = false;
 
 		#if defined(TARGET_OPENGLES)
 			engine = new EngineOpenGLES();

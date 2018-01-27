@@ -292,9 +292,9 @@ namespace ofxImGui
 	}
 
 	//--------------------------------------------------------------
-	void EngineGLFW::onKeyReleased(ofKeyEventArgs& event)
-	{
+	void EngineGLFW::onKeyReleased(ofKeyEventArgs& event) {
 		int key = event.keycode;
+		//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << ", key: " << key;
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[key] = false;
 
@@ -307,6 +307,7 @@ namespace ofxImGui
 	//--------------------------------------------------------------
 	void EngineGLFW::onKeyPressed(ofKeyEventArgs& event) {
 		int key = event.keycode;
+		//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << ", key: " << key;
 		ImGuiIO& io = ImGui::GetIO();
 		io.KeysDown[key] = true;
 
@@ -315,8 +316,7 @@ namespace ofxImGui
 		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
 		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
 
-		if (key < GLFW_KEY_ESCAPE)
-		{
+		if (key < GLFW_KEY_ESCAPE) {
 			io.AddInputCharacter((unsigned short)event.codepoint);
 		}
 	}
