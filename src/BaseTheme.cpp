@@ -50,7 +50,7 @@ namespace ofxImGui
 		style->ScrollbarSize = refFontSize + 4.0f;  // when font size changes scrollbarsize is about fontSize + 4 
 		style->ScrollbarRounding = 0.0f;
 		//style->WindowPadding = ImVec2(10, 10); // left upper corner of first widget
-		//style->ItemSpacing = ImVec2(10, 10); // spacing between widgets
+		//style->ItemSpacing = ImVec2(0.f, 4.f); // spacing between widgets
 	}
 
 	//--------------------------------------------------------------

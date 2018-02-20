@@ -73,7 +73,7 @@ namespace ofxImGui
 		setMousePos(touch.x, touch.y);
 		mousePressed[0] = true;
 		mouseReleased = false;
-		//ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__;
+		ofLogNotice("Frame nr") << ofGetFrameNum() << " , " << __FUNCTION__ << " , " << ofGetTimestampString(); 
 	}
 
 	//--------------------------------------------------------------

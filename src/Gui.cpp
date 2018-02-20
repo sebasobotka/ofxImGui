@@ -173,11 +173,7 @@ namespace ofxImGui
 	//--------------------------------------------------------------
 	void Gui::passFunctionKeys() {
 		ImGuiIO& io = ImGui::GetIO();
-		
-		if (virtKeyboardFunctionKeys.size()) {
-			
-			ofLogNotice("Frame nr") << ofGetFrameNum() << " , mousePos: " << io.MousePos  << ", key: " << virtKeyboardFunctionKeys[0].key << ", state: " << virtKeyboardFunctionKeys[0].state;
-
+		if (virtKeyboardFunctionKeys.size() > 0) {
 			io.KeysDown[virtKeyboardFunctionKeys[0].key] = virtKeyboardFunctionKeys[0].state;
 			virtKeyboardFunctionKeys.erase(virtKeyboardFunctionKeys.begin(), virtKeyboardFunctionKeys.begin() + 1);
 		}

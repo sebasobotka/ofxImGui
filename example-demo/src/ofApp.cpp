@@ -4,8 +4,9 @@
 void ofApp::setup() {
     ofSetLogLevel(OF_LOG_VERBOSE);
     
-	gui.addFont("fonts\\Verdana.ttf", 15);
-	gui.addFont("fonts\\RobotoSlab-Regular.ttf", 20);
+	int indexFontA = gui.addFont("fonts\\Verdana.ttf", 15);
+	int indexFontB = gui.addFont("fonts\\RobotoSlab-Regular.ttf", 20);
+	gui.SetDefaultFont(indexFontA);
 	
     //required call
     gui.setup();
